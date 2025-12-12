@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+
+    <style>
+        /* ----------- Global Styles ----------- */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            background: #0d6efd;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        /* ----------- Form Container ----------- */
+        form {
+            background: #ffffff;
+            padding: 25px;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input[type="radio"] {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        /* ----------- Button ----------- */
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            width: 100%;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #004bb5;
+        }
+
+        /* ----------- Terms Checkbox ----------- */
+        .terms-text {
+            margin-top: 10px;
+        }
+
+        .terms-text a {
+            color: #0d6efd;
+            text-decoration: none;
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Registration Form</h1>
+</header>
+
+<main>
+    <form id="regForm">
+        
+        <!-- Full Name -->
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" required minlength="3">
+
+        <!-- Email -->
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+
+        <!-- Password -->
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" 
+               required minlength="8"
+               pattern="^(?=.*[0-9])(?=.*[\\W_]).{8,}$"
+               title="Password must be at least 8 characters, include a number and a special character.">
+
+        <!-- Confirm Password -->
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+        <!-- Gender -->
+        <label>Gender</label>
+        <div>
+            <input type="radio" name="gender" value="Male" required> Male
+            <input type="radio" name="gender" value="Female"> Female
+            <input type="radio" name="gender" value="Other"> Other
+        </div>
+
+        <!-- Date of Birth -->
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <!-- Country -->
+        <label for="country">Country</label>
+        <select id="country" name="country" required>
+            <option value="">-- Select Country --</option>
+            <option>Philippines</option>
+            <option>USA</option>
+            <option>Canada</option>
+            <option>UK</option>
+            <option>Australia</option>
+        </select>
+
+        <!-- Terms -->
+        <label class="terms-text">
+            <input type="checkbox" required>
+            ✅ I agree to the 
+            <a href="terms.html" target="_blank">Terms & Conditions</a>
+        </label>
+
+        <button type="submit">Register</button>
+    </form>
+</main>
+
+<footer>
+    <p>&copy; 2025 Registration System</p>
+</footer>
+
+<script>
+    // --------- Confirm Password Validation ----------
+    const form = document.getElementById("regForm");
+    form.addEventListener("submit", function(event) {
+        const password = document.getElementById("password").value;
+        const confirmPass = document.getElementById("confirmPassword").value;
+
+        if (password !== confirmPass) {
+            alert("Passwords do not match!");
+            event.preventDefault();
+        }
+
+        // --------- Age Validation (18 years old) ----------
+        const dob = document.getElementById("dob").value;
+        const birthDate = new Date(dob);
+        const today = new Date();
+
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        if (age < 18 || (age === 18 && monthDiff < 0)) {
+            alert("You must be at least 18 years old to register.");
+            event.preventDefault();
+        }
+    });
+</script>
+
+</body>
+</html>
